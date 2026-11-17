@@ -205,3 +205,15 @@ p{margin:0 0 1em}
   .slider__slide,.slider__img{transition:none}
 }
 .slider__h{font-size:clamp(2.4rem,5vw,4rem)}
+
+/* Testimonials */
+.reviews{background:var(--color-surface)}
+.reviews__grid{display:grid;grid-template-columns:repeat(var(--cols,3),1fr);gap:32px}
+.review{margin:0;background:var(--color-bg);padding:36px 32px;border-radius:2px;text-align:center}
+.review__stars{color:rgba(44,44,44,.2);letter-spacing:.2em;font-size:1.05rem;margin-bottom:16px}
+.review__stars .is-on{color:var(--color-accent)}
+.review blockquote{margin:0 0 20px;font-family:var(--font-heading);font-size:1.15rem;line-height:1.5}
+.review figcaption{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase}
+.review figcaption span{display:block;opacity:.6;margin-top:4px;letter-spacing:.08em}
+.reviews__hint{text-align:center;opacity:.6;margin-top:24px;font-size:.9rem}
+@media (max-width:900px){.reviews__grid{grid-template-columns:1fr}}

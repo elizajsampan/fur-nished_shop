@@ -14,7 +14,7 @@
         {%- endfor -%}
       {%- else -%}
         {%- for i in (1..section.settings.columns) -%}
-          <div class="card"><div class="card__media">{{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}</div><h3 class="card__title">Example product</h3><div class="card__price">$0.00</div></div>
+          <div class="card"><div class="card__media">{{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}</div><h3 class="card__title">Example product</h3><div class="card__price">₱0.00</div></div>
         {%- endfor -%}
       {%- endif -%}
     </div>
