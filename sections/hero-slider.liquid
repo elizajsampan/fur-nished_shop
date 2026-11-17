@@ -1,0 +1,128 @@
+<section class="slider" data-slider data-autoplay="{{ section.settings.autoplay }}" data-delay="{{ section.settings.delay | times: 1000 }}" aria-roledescription="carousel" aria-label="Featured" {{ section.shopify_attributes }}>
+  <div class="slider__track">
+    {%- for block in section.blocks -%}
+      {%- liquid
+        assign fallback = 'slide-' | append: forloop.index | append: '.jpg'
+        assign pos = block.settings.focus | default: 'center'
+        assign pos_style = 'object-position:' | append: pos
+        assign loading_mode = 'lazy'
+        if forloop.first
+          assign loading_mode = 'eager'
+        endif
+      -%}
+      <div class="slider__slide{% if forloop.first %} is-active{% endif %}" data-slide role="group" aria-roledescription="slide" aria-label="{{ forloop.index }} / {{ forloop.length }}" {{ block.shopify_attributes }}>
+        {%- if block.settings.image != blank -%}
+          {{ block.settings.image | image_url: width: 2400 | image_tag: class: 'slider__img', widths: '800, 1200, 1800, 2400', sizes: '100vw', loading: loading_mode, alt: block.settings.heading, style: pos_style }}
+        {%- else -%}
+          <img class="slider__img" src="{{ fallback | asset_url }}" alt="{{ block.settings.heading | escape }}" style="object-position:{{ pos }}" width="1200" height="800" loading="{{ loading_mode }}">
+        {%- endif -%}
+        <div class="page-width slider__inner">
+          <div class="slider__content">
+            {%- if block.settings.eyebrow != blank -%}<span class="eyebrow">{{ block.settings.eyebrow }}</span>{%- endif -%}
+            {%- if forloop.first -%}<h1>{{ block.settings.heading }}</h1>{%- else -%}<h2 class="slider__h h1">{{ block.settings.heading }}</h2>{%- endif -%}
+            {%- if block.settings.text != blank -%}<p>{{ block.settings.text }}</p>{%- endif -%}
+            <div class="hero__buttons">
+              {%- if block.settings.button_label != blank -%}<a class="button" href="{{ block.settings.button_link | default: routes.collections_url }}">{{ block.settings.button_label }}</a>{%- endif -%}
+              {%- if block.settings.button2_label != blank -%}<a class="button button--ghost" href="{{ block.settings.button2_link | default: routes.root_url }}">{{ block.settings.button2_label }}</a>{%- endif -%}
+            </div>
+          </div>
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  {%- if section.blocks.size > 1 -%}
+    <button class="slider__arrow slider__arrow--prev" type="button" data-prev aria-label="Previous slide">&#8592;</button>
+    <button class="slider__arrow slider__arrow--next" type="button" data-next aria-label="Next slide">&#8594;</button>
+    <div class="slider__dots">
+      {%- for block in section.blocks -%}
+        <button type="button" class="slider__dot{% if forloop.first %} is-active{% endif %}" data-dot="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }}"></button>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</section>
+
+<script>
+  (function () {
+    var root = document.currentScript.previousElementSibling;
+    if (!root || !root.hasAttribute('data-slider')) return;
+    var slides = root.querySelectorAll('[data-slide]');
+    var dots = root.querySelectorAll('[data-dot]');
+    if (slides.length < 2) return;
+    var i = 0, timer = null;
+    var delay = parseInt(root.dataset.delay, 10) || 6000;
+    var auto = root.dataset.autoplay === 'true' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function go(n) {
+      i = (n + slides.length) % slides.length;
+      slides.forEach(function (s, k) { s.classList.toggle('is-active', k === i); s.setAttribute('aria-hidden', k === i ? 'false' : 'true'); });
+      dots.forEach(function (d, k) { d.classList.toggle('is-active', k === i); });
+    }
+    function start() { if (auto) { stop(); timer = setInterval(function () { go(i + 1); }, delay); } }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+
+    root.querySelector('[data-prev]').addEventListener('click', function () { go(i - 1); start(); });
+    root.querySelector('[data-next]').addEventListener('click', function () { go(i + 1); start(); });
+    dots.forEach(function (d) { d.addEventListener('click', function () { go(parseInt(d.dataset.dot, 10)); start(); }); });
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', start);
+    root.addEventListener('focusin', stop);
+    root.addEventListener('focusout', start);
+
+    var x0 = null;
+    root.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    root.addEventListener('touchend', function (e) {
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 40) { go(dx < 0 ? i + 1 : i - 1); start(); }
+      x0 = null;
+    });
+
+    // Theme editor: jump to the slide being edited
+    document.addEventListener('shopify:block:select', function (e) {
+      var idx = Array.prototype.indexOf.call(slides, e.target);
+      if (idx > -1) { stop(); go(idx); }
+    });
+    document.addEventListener('shopify:section:deselect', start);
+
+    go(0);
+    start();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Hero slider",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "checkbox", "id": "autoplay", "label": "Auto-rotate slides", "default": true },
+    { "type": "range", "id": "delay", "label": "Seconds per slide", "min": 3, "max": 10, "step": 1, "default": 6 }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image (leave empty for the theme's default photo)" },
+        { "type": "select", "id": "focus", "label": "Image focus", "default": "center", "options": [
+          { "value": "center top", "label": "Top" },
+          { "value": "center", "label": "Middle" },
+          { "value": "center bottom", "label": "Bottom" },
+          { "value": "left center", "label": "Left" },
+          { "value": "right center", "label": "Right" }
+        ] },
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "European modern" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Elevated living for cats and their humans." },
+        { "type": "textarea", "id": "text", "label": "Text" },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop the collection" },
+        { "type": "url", "id": "button_link", "label": "Button link" },
+        { "type": "text", "id": "button2_label", "label": "Second button label" },
+        { "type": "url", "id": "button2_link", "label": "Second button link" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Hero slider", "blocks": [{ "type": "slide" }, { "type": "slide" }, { "type": "slide" }] }
+  ]
+}
+{% endschema %}

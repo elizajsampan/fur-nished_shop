@@ -1,0 +1,22 @@
+{%- liquid
+  assign p = product
+-%}
+<a class="card" href="{{ p.url }}">
+  <div class="card__media">
+    {%- if p.featured_image -%}
+      {{ p.featured_image | image_url: width: 800 | image_tag: widths: '300, 500, 800', sizes: '(min-width: 900px) 30vw, 50vw', loading: 'lazy', alt: p.featured_image.alt | default: p.title }}
+      {%- if p.images.size > 1 -%}
+        {{ p.images[1] | image_url: width: 800 | image_tag: class: 'card__img-hover', widths: '300, 500, 800', loading: 'lazy', alt: '' }}
+      {%- endif -%}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+    {%- if p.available == false -%}<span class="card__badge">{{ 'general.sold_out' | t }}</span>
+    {%- elsif p.compare_at_price > p.price -%}<span class="card__badge">{{ 'general.sale' | t }}</span>{%- endif -%}
+  </div>
+  <h3 class="card__title">{{ p.title }}</h3>
+  <div class="card__price">
+    {%- if p.price_varies -%}{{ 'product.from' | t }} {% endif -%}{{ p.price | money }}
+    {%- if p.compare_at_price > p.price and p.price_varies == false -%}<s>{{ p.compare_at_price | money }}</s>{%- endif -%}
+  </div>
+</a>

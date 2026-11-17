@@ -1,0 +1,37 @@
+<footer class="footer" {{ section.shopify_attributes }}>
+  <div class="page-width">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand">{{ shop.name }}</div>
+        <p>{{ section.settings.tagline }}</p>
+        <ul style="display:flex;gap:18px">
+          {%- if settings.social_instagram != blank -%}<li><a href="{{ settings.social_instagram }}">Instagram</a></li>{%- endif -%}
+          {%- if settings.social_pinterest != blank -%}<li><a href="{{ settings.social_pinterest }}">Pinterest</a></li>{%- endif -%}
+          {%- if settings.social_tiktok != blank -%}<li><a href="{{ settings.social_tiktok }}">TikTok</a></li>{%- endif -%}
+        </ul>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <ul>{%- for link in linklists[section.settings.menu_shop].links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}</ul>
+      </div>
+      <div>
+        <h4>Care</h4>
+        <ul>{%- for link in linklists[section.settings.menu_info].links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}</ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
+      <span>{{ powered_by_link }}</span>
+    </div>
+  </div>
+</footer>
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "text", "id": "tagline", "label": "Tagline", "default": "Elevated living for cats and their humans." },
+    { "type": "link_list", "id": "menu_shop", "label": "Shop menu", "default": "main-menu" },
+    { "type": "link_list", "id": "menu_info", "label": "Info menu", "default": "footer" }
+  ]
+}
+{% endschema %}

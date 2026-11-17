@@ -1,0 +1,12 @@
+{
+  "current": {
+    "color_background": "#FAF8F5",
+    "color_surface": "#F1ECE5",
+    "color_text": "#2C2C2C",
+    "color_accent": "#C86D51",
+    "color_accent_alt": "#A67B5B",
+    "font_heading": "playfair_display_n4",
+    "font_body": "lato_n4",
+    "page_width": 1300
+  }
+}
