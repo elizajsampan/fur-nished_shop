@@ -3,14 +3,14 @@
     "hero": {
       "type": "hero-slider",
       "blocks": {
-        "s1": { "type": "slide", "settings": { "focus": "center", "eyebrow": "European modern", "heading": "Elevated living for cats and their humans.", "text": "Sculptural, solid-wood furniture your cat will claim and your living room will love.", "button_label": "Shop cat furniture", "button_link": "shopify://collections/cat-furniture", "button2_label": "Our story", "button2_link": "shopify://pages/our-story" } },
-        "s2": { "type": "slide", "settings": { "focus": "center", "eyebrow": "Play, perch, scratch", "heading": "Scratchers that belong in your living room.", "text": "Oak, sisal and clean lines, so your cat gets what they want and your home keeps its style.", "button_label": "Shop scratchers", "button_link": "shopify://collections/cat-scratchers" } },
-        "s3": { "type": "slide", "settings": { "focus": "center", "eyebrow": "Cat beds", "heading": "A cosy spot for every nap.", "text": "Cushioned, washable and beautifully made.", "button_label": "Shop cat beds", "button_link": "shopify://collections/cat-beds" } }
+        "s1": { "type": "slide", "settings": { "focus": "center", "eyebrow": "European modern", "heading": "Elevated living for cats and their humans.", "text": "Cushioned, washable beds and sculptural furniture your cat will claim and your living room will love.", "button_label": "Shop cat beds", "button_link": "shopify://collections/cat-beds", "button2_label": "Our story", "button2_link": "shopify://pages/our-story" } },
+        "s2": { "type": "slide", "settings": { "focus": "center", "eyebrow": "Furniture with a secret", "heading": "Coffee tables your cat will claim.", "text": "Solid oak and walnut pieces with a hidden nook, made to blend into your living room.", "button_label": "Shop cat furniture", "button_link": "shopify://collections/cat-furniture" } },
+        "s3": { "type": "slide", "settings": { "focus": "center", "eyebrow": "Play, perch, scratch", "heading": "Scratchers that belong in your living room.", "text": "Oak, sisal and clean lines, so your cat gets what they want and your home keeps its style.", "button_label": "Shop scratchers", "button_link": "shopify://collections/cat-scratchers" } }
       },
       "block_order": ["s1", "s2", "s3"],
       "settings": { "autoplay": true, "delay": 6 }
     },
-    "featured": { "type": "featured-collection", "settings": { "collection": "all" } },
+    "featured": { "type": "featured-collection", "settings": { "collection": "all", "heading": "Our best loved pieces", "count": 4, "columns": 4 } },
     "story": { "type": "brand-story", "settings": { "button_link": "shopify://pages/our-story" } },
     "features": {
       "type": "features",
@@ -21,7 +21,16 @@
       },
       "block_order": ["f1", "f2", "f3"]
     },
+    "reviews": {
+      "type": "testimonials",
+      "blocks": {
+        "r1": { "type": "review", "settings": { "rating": 5 } },
+        "r2": { "type": "review", "settings": { "rating": 5 } },
+        "r3": { "type": "review", "settings": { "rating": 5 } }
+      },
+      "block_order": ["r1", "r2", "r3"]
+    },
     "newsletter": { "type": "newsletter" }
   },
-  "order": ["hero", "featured", "story", "features", "newsletter"]
+  "order": ["hero", "featured", "story", "features", "reviews", "newsletter"]
 }
