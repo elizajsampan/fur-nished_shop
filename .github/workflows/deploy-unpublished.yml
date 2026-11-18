@@ -1,0 +1,70 @@
+name: Deploy branch to unpublished theme
+
+# Manual only. In GitHub: Actions > this workflow > Run workflow,
+# then pick the branch in the "Use workflow from" dropdown.
+on:
+  workflow_dispatch:
+    inputs:
+      theme_name:
+        description: Unpublished theme to deploy to (created if it doesn't exist)
+        required: true
+        default: Staging
+
+concurrency:
+  group: deploy-unpublished-${{ inputs.theme_name }}
+  cancel-in-progress: true
+
+env:
+  SHOPIFY_STORE: fur-nished-store.myshopify.com
+  SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+  THEME_NAME: ${{ inputs.theme_name }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Shopify CLI
+        run: npm install -g @shopify/cli@latest
+
+      - name: Theme check
+        run: shopify theme check
+        continue-on-error: true
+
+      - name: Deploy to unpublished theme
+        run: |
+          find_id() {
+            shopify theme list --store "$SHOPIFY_STORE" --json \
+              | jq -r --arg n "$THEME_NAME" '[.[] | select(.name == $n and .role != "live")][0].id // empty'
+          }
+
+          # Never touch the live theme, even if someone names a theme the same.
+          LIVE_NAME=$(shopify theme list --store "$SHOPIFY_STORE" --json | jq -r '[.[] | select(.role == "live")][0].name // empty')
+          if [ "$THEME_NAME" = "$LIVE_NAME" ]; then
+            echo "Refusing to deploy: '$THEME_NAME' is the live theme's name. Choose another name." >&2
+            exit 1
+          fi
+
+          THEME_ID=$(find_id)
+          if [ -z "$THEME_ID" ]; then
+            echo "Theme '$THEME_NAME' not found, creating it."
+            shopify theme push --store "$SHOPIFY_STORE" --unpublished --theme "$THEME_NAME" --nodelete
+            THEME_ID=$(find_id)
+          else
+            echo "Updating theme '$THEME_NAME' ($THEME_ID)."
+            shopify theme push --store "$SHOPIFY_STORE" --theme "$THEME_ID" --nodelete
+          fi
+
+          PREVIEW="https://${SHOPIFY_STORE}/?preview_theme_id=${THEME_ID}"
+          echo "Branch ${GITHUB_REF_NAME} deployed to '${THEME_NAME}'"
+          echo "Preview: ${PREVIEW}"
+          {
+            echo "### Deployed \`${GITHUB_REF_NAME}\` to \`${THEME_NAME}\`"
+            echo ""
+            echo "Preview: ${PREVIEW}"
+          } >> "$GITHUB_STEP_SUMMARY"
