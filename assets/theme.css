@@ -159,13 +159,18 @@ p{margin:0 0 1em}
   .product__info{position:static}
   .header__inner{grid-template-columns:auto 1fr auto;height:68px}
   .menu-toggle{display:block}
-  .header__logo{text-align:left;justify-self:center}
+  .header__logo{text-align:center;justify-self:center;min-width:0}
+  .header__logo-name{font-size:1.5rem}
+  .header__logo-tag{display:none}
+  .header__inner{gap:12px}
   .nav{display:none;position:absolute;top:100%;left:0;right:0;background:var(--color-bg);flex-direction:column;gap:0;padding:12px 24px 24px;border-bottom:1px solid rgba(44,44,44,.1)}
   .nav.is-open{display:flex}
   .nav a{padding:14px 0}
   .header__actions .account-link{display:none}
 }
 @media (max-width:560px){
+  .page-width{padding-left:20px;padding-right:20px}
+  .footer__bottom{flex-direction:column}
   .product__gallery{grid-template-columns:1fr}
   .product__main{grid-column:1;grid-row:1}
   .product__thumbs{grid-column:1;grid-row:2;flex-direction:row;overflow-x:auto}
