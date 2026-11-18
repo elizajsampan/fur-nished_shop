@@ -38,13 +38,18 @@ jobs:
 
       - name: Deploy to unpublished theme
         run: |
+          # The CLI can print diagnostic JSON objects before the theme list,
+          # so keep only the top-level array.
+          list_themes() {
+            shopify theme list --store "$SHOPIFY_STORE" --json | jq -c 'select(type == "array")' | head -n 1
+          }
+
           find_id() {
-            shopify theme list --store "$SHOPIFY_STORE" --json \
-              | jq -r --arg n "$THEME_NAME" '[.[] | select(.name == $n and .role != "live")][0].id // empty'
+            list_themes | jq -r --arg n "$THEME_NAME" '[.[] | select(.name == $n and .role != "live")][0].id // empty'
           }
 
           # Never touch the live theme, even if someone names a theme the same.
-          LIVE_NAME=$(shopify theme list --store "$SHOPIFY_STORE" --json | jq -r '[.[] | select(.role == "live")][0].name // empty')
+          LIVE_NAME=$(list_themes | jq -r '[.[] | select(.role == "live")][0].name // empty')
           if [ "$THEME_NAME" = "$LIVE_NAME" ]; then
             echo "Refusing to deploy: '$THEME_NAME' is the live theme's name. Choose another name." >&2
             exit 1
