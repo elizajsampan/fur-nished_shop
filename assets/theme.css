@@ -64,16 +64,17 @@ p{margin:0 0 1em}
 
 /* Product grid */
 .grid{display:grid;gap:40px 28px;grid-template-columns:repeat(var(--cols,3),1fr)}
-.card{text-decoration:none;display:block}
-.card__media{position:relative;aspect-ratio:4/5;background:var(--color-surface);overflow:hidden;border-radius:2px}
+.card{text-decoration:none;display:flex;flex-direction:column;background:#fff;border:1px solid rgba(44,44,44,.14);border-radius:6px;overflow:hidden;transition:box-shadow .3s ease,transform .3s ease,border-color .3s ease}
+.card:hover{box-shadow:0 12px 28px rgba(44,44,44,.1);transform:translateY(-3px);border-color:rgba(44,44,44,.28)}
+.card__media{position:relative;aspect-ratio:4/5;background:var(--color-surface);overflow:hidden;border-bottom:1px solid rgba(44,44,44,.08)}
 .card__media img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
 .card:hover .card__media img{transform:scale(1.04)}
 .card__media .card__img-hover{position:absolute;inset:0;opacity:0;transition:opacity .4s}
 .card:hover .card__img-hover{opacity:1}
 .card__badge{position:absolute;top:14px;left:14px;background:var(--color-bg);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;padding:5px 11px;border-radius:2px}
-.card__title{font-family:var(--font-heading);font-size:1.2rem;margin:16px 0 4px}
-.card__price{font-size:.92rem;opacity:.85}
-.card__price s{opacity:.5;margin-left:8px}
+.card__title{font-family:var(--font-heading);font-size:1.15rem;line-height:1.3;margin:0;padding:18px 18px 6px;text-align:center}
+.card__price{font-size:.95rem;letter-spacing:.04em;color:var(--color-accent);font-weight:700;text-align:center;padding:0 18px 20px;margin-top:auto}
+.card__price s{color:var(--color-text);font-weight:400;opacity:.45;margin-left:8px}
 .placeholder-svg{width:100%;height:100%;fill:#cfc6ba}
 
 /* Brand story */
@@ -222,3 +223,35 @@ p{margin:0 0 1em}
 .review figcaption span{display:block;opacity:.6;margin-top:4px;letter-spacing:.08em}
 .reviews__hint{text-align:center;opacity:.6;margin-top:24px;font-size:.9rem}
 @media (max-width:900px){.reviews__grid{grid-template-columns:1fr}}
+
+/* Contact */
+.contact__intro{max-width:520px;margin:12px auto 0;opacity:.8}
+.contact__grid{display:grid;grid-template-columns:1fr 1.2fr;gap:56px;align-items:start;margin-top:48px}
+.contact__h{font-size:1.5rem;margin-bottom:20px}
+.contact__list{list-style:none;padding:0;margin:0 0 28px;border:1px solid rgba(44,44,44,.14);border-radius:6px;background:#fff}
+.contact__list li{padding:16px 20px;border-bottom:1px solid rgba(44,44,44,.08)}
+.contact__list li:last-child{border-bottom:0}
+.contact__list span{display:block;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;opacity:.6;margin-bottom:4px}
+.contact__note{padding:18px 20px;margin-bottom:14px;background:var(--color-surface);border-radius:6px}
+.contact__note h3{font-family:var(--font-heading);font-size:1.1rem;margin:0 0 6px}
+.contact__note p{margin:0;font-size:.92rem;opacity:.85}
+.contact__form{padding:32px;background:#fff;border:1px solid rgba(44,44,44,.14);border-radius:6px}
+.contact__fields .field{margin-bottom:18px}
+.contact__fields label{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
+.contact__fields input,.contact__fields select,.contact__fields textarea{font:inherit;padding:13px 14px;border:1px solid rgba(44,44,44,.3);background:#fff;width:100%;border-radius:2px;box-sizing:border-box}
+.contact__success{background:var(--color-surface);padding:14px 16px;border-radius:4px;margin:0 0 18px}
+.contact__error{color:#a33;margin-bottom:18px}
+@media (max-width:900px){.contact__grid{grid-template-columns:1fr;gap:36px}.contact__form{padding:22px}}
+
+/* Brand story / philosophy */
+.story__media{position:relative;padding:0 0 24px 24px}
+.story__media::before{content:"";position:absolute;left:0;bottom:0;width:78%;height:78%;border:1px solid var(--color-accent);border-radius:2px}
+.story__media .split__img{position:relative;aspect-ratio:1/1;max-height:560px}
+.story__text{font-size:1.1rem;line-height:1.75;margin-bottom:8px}
+.story__text p{margin:0 0 1em}
+.story__points{list-style:none;padding:0;margin:28px 0 36px;border-top:1px solid rgba(44,44,44,.14)}
+.story__points li{display:flex;gap:20px;padding:20px 0;border-bottom:1px solid rgba(44,44,44,.14)}
+.story__num{font-family:var(--font-heading);font-size:1.5rem;color:var(--color-accent);line-height:1.2;min-width:36px}
+.story__points h3{font-family:var(--font-heading);font-size:1.1rem;margin:0 0 4px}
+.story__points p{margin:0;font-size:.92rem;opacity:.8}
+@media (max-width:900px){.story__media{padding:0 0 16px 16px}.story__media .split__img{aspect-ratio:4/3}}

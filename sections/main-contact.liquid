@@ -1,0 +1,98 @@
+<section class="section contact" {{ section.shopify_attributes }}>
+  <div class="page-width">
+    <div class="page-title">
+      <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      <h1>{{ page.title }}</h1>
+      {%- if section.settings.intro != blank -%}<p class="contact__intro">{{ section.settings.intro }}</p>{%- endif -%}
+    </div>
+
+    <div class="contact__grid">
+      <div class="contact__info">
+        <h2 class="contact__h">{{ section.settings.support_heading }}</h2>
+        <ul class="contact__list">
+          {%- if section.settings.email != blank -%}
+            <li><span>Email</span><a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a></li>
+          {%- endif -%}
+          {%- if section.settings.phone != blank -%}
+            <li><span>Phone</span><a href="tel:{{ section.settings.phone | remove: ' ' }}">{{ section.settings.phone }}</a></li>
+          {%- endif -%}
+          {%- if section.settings.hours != blank -%}
+            <li><span>Hours</span>{{ section.settings.hours }}</li>
+          {%- endif -%}
+          {%- if section.settings.reply_time != blank -%}
+            <li><span>Response time</span>{{ section.settings.reply_time }}</li>
+          {%- endif -%}
+        </ul>
+
+        {%- for block in section.blocks -%}
+          <div class="contact__note" {{ block.shopify_attributes }}>
+            <h3>{{ block.settings.title }}</h3>
+            <p>{{ block.settings.text }}</p>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <div class="contact__form">
+        <h2 class="contact__h">{{ section.settings.form_heading }}</h2>
+        {%- form 'contact', class: 'contact__fields' -%}
+          {%- if form.posted_successfully? -%}
+            <p class="contact__success" role="status">{{ section.settings.success_message }}</p>
+          {%- endif -%}
+          {%- if form.errors -%}
+            <div class="contact__error" role="alert">{{ form.errors | default_errors }}</div>
+          {%- endif -%}
+          <div class="field">
+            <label for="ContactName">Name</label>
+            <input id="ContactName" type="text" name="contact[name]" autocomplete="name" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}" required>
+          </div>
+          <div class="field">
+            <label for="ContactEmail">Email</label>
+            <input id="ContactEmail" type="email" name="contact[email]" autocomplete="email" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" required>
+          </div>
+          <div class="field">
+            <label for="ContactTopic">How can we help?</label>
+            <select id="ContactTopic" name="contact[topic]">
+              <option>Order status</option>
+              <option>Shipping &amp; delivery</option>
+              <option>Returns &amp; exchanges</option>
+              <option>Product question</option>
+              <option>Something else</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="ContactMessage">Message</label>
+            <textarea id="ContactMessage" name="contact[body]" rows="6" required>{% if form.body %}{{ form.body }}{% endif %}</textarea>
+          </div>
+          <button class="button" type="submit">Send message</button>
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Contact",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Customer service" },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Questions about an order, delivery or a piece for your cat? We're happy to help." },
+    { "type": "text", "id": "support_heading", "label": "Support heading", "default": "We're here to help" },
+    { "type": "text", "id": "email", "label": "Support email" },
+    { "type": "text", "id": "phone", "label": "Support phone" },
+    { "type": "text", "id": "hours", "label": "Support hours", "default": "Monday to Friday, 9am to 6pm" },
+    { "type": "text", "id": "reply_time", "label": "Response time", "default": "Within 1 business day" },
+    { "type": "text", "id": "form_heading", "label": "Form heading", "default": "Send us a message" },
+    { "type": "text", "id": "success_message", "label": "Success message", "default": "Thanks, your message is on its way. We'll reply soon." }
+  ],
+  "blocks": [
+    {
+      "type": "note",
+      "name": "Info note",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Shipping" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Free shipping on orders over ₱10,000." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Contact" }]
+}
+{% endschema %}
