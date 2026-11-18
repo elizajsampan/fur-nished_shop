@@ -9,13 +9,13 @@
         <tbody>
           {%- for item in cart.items -%}
             <tr>
-              <td><div class="cart-item">
+              <td class="cart-cell--product"><div class="cart-item">
                 {%- if item.image -%}{{ item.image | image_url: width: 200 | image_tag: loading: 'lazy' }}{%- endif -%}
                 <div><a href="{{ item.url }}">{{ item.product.title }}</a>{%- unless item.product.has_only_default_variant -%}<br><small>{{ item.variant.title }}</small>{%- endunless -%}<br><small><a href="{{ item.url_to_remove }}">{{ 'cart.remove' | t }}</a></small></div>
               </div></td>
-              <td>{{ item.final_price | money }}</td>
-              <td><input type="number" name="updates[]" value="{{ item.quantity }}" min="0" style="width:70px;padding:8px;font:inherit"></td>
-              <td>{{ item.final_line_price | money }}</td>
+              <td class="cart-cell cart-cell--price" data-label="Price">{{ item.final_price | money }}</td>
+              <td class="cart-cell cart-cell--qty" data-label="Qty"><input type="number" name="updates[]" value="{{ item.quantity }}" min="0" style="width:70px;padding:8px;font:inherit"></td>
+              <td class="cart-cell cart-cell--total" data-label="Total">{{ item.final_line_price | money }}</td>
             </tr>
           {%- endfor -%}
         </tbody>
