@@ -1,0 +1,41 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Fur-nished",
+    "theme_version": "1.0.0",
+    "theme_author": "Fur-nished",
+    "theme_documentation_url": "https://help.shopify.com/",
+    "theme_support_url": "https://help.shopify.com/"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      { "type": "color", "id": "color_background", "label": "Background", "default": "#FAF8F5" },
+      { "type": "color", "id": "color_surface", "label": "Surface (cards, footer)", "default": "#F1ECE5" },
+      { "type": "color", "id": "color_text", "label": "Text & headings", "default": "#2C2C2C" },
+      { "type": "color", "id": "color_accent", "label": "Accent (buttons, highlights)", "default": "#C86D51" },
+      { "type": "color", "id": "color_accent_alt", "label": "Accent hover (warm oak)", "default": "#A67B5B" }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      { "type": "font_picker", "id": "font_heading", "label": "Heading font", "default": "playfair_display_n4" },
+      { "type": "font_picker", "id": "font_body", "label": "Body font", "default": "lato_n4" }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      { "type": "range", "id": "page_width", "label": "Page width", "min": 1000, "max": 1600, "step": 50, "unit": "px", "default": 1300 }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      { "type": "url", "id": "social_instagram", "label": "Instagram" },
+      { "type": "url", "id": "social_pinterest", "label": "Pinterest" },
+      { "type": "url", "id": "social_tiktok", "label": "TikTok" }
+    ]
+  }
+]

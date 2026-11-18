@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-contact",
+      "blocks": {
+        "n1": { "type": "note", "settings": { "title": "Shipping", "text": "Free shipping on orders over ₱10,000." } },
+        "n2": { "type": "note", "settings": { "title": "Returns & exchanges", "text": "Changed your mind? Message us with your order number and we'll sort it out." } }
+      },
+      "block_order": ["n1", "n2"],
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

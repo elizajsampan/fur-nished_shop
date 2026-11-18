@@ -1,0 +1,22 @@
+<section class="section surface" {{ section.shopify_attributes }}>
+  <div class="page-width newsletter">
+    <h2>{{ section.settings.heading }}</h2>
+    <p>{{ section.settings.text }}</p>
+    {%- form 'customer', id: 'Newsletter' -%}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <input type="email" name="contact[email]" placeholder="{{ 'newsletter.email' | t }}" aria-label="{{ 'newsletter.email' | t }}" required>
+      <button class="button" type="submit">{{ 'newsletter.subscribe' | t }}</button>
+      {%- if form.posted_successfully? -%}<p class="form-msg">{{ 'newsletter.success' | t }}</p>{%- endif -%}
+    {%- endform -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Join the household" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "New pieces, styling ideas and 10% off your first order." }
+  ],
+  "presets": [{ "name": "Newsletter" }]
+}
+{% endschema %}

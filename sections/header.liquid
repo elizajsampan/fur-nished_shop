@@ -1,0 +1,37 @@
+<header class="header" {{ section.shopify_attributes }}>
+  <div class="page-width header__inner">
+    <div>
+      <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="MainNav">{{ 'general.menu' | t }}</button>
+      <nav class="nav" id="MainNav" data-nav aria-label="Main">
+        {%- for link in linklists[section.settings.menu].links -%}
+          <a href="{{ link.url }}" {% if link.current %}aria-current="page"{% endif %}>{{ link.title }}</a>
+        {%- endfor -%}
+      </nav>
+    </div>
+    <a class="header__logo" href="{{ routes.root_url }}">
+      {%- if section.settings.logo != blank -%}
+        {{ section.settings.logo | image_url: width: 300 | image_tag: alt: shop.name, loading: 'eager' }}
+      {%- else -%}
+        <span class="header__logo-name">{{ shop.name }}</span>
+        {%- if section.settings.show_tagline -%}<span class="header__logo-tag">{{ section.settings.tagline }}</span>{%- endif -%}
+      {%- endif -%}
+    </a>
+    <div class="header__actions">
+      {%- if shop.customer_accounts_enabled -%}
+        <a class="account-link" href="{{ routes.account_url }}">Account</a>
+      {%- endif -%}
+      <a href="{{ routes.cart_url }}">{{ 'general.cart' | t }}{% if cart.item_count > 0 %}<span class="cart-count">{{ cart.item_count }}</span>{% endif %}</a>
+    </div>
+  </div>
+</header>
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo image" },
+    { "type": "checkbox", "id": "show_tagline", "label": "Show tagline under name", "default": true },
+    { "type": "text", "id": "tagline", "label": "Tagline", "default": "Elevated living for cats and their humans." },
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }
+  ]
+}
+{% endschema %}

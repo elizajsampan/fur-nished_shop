@@ -1,0 +1,56 @@
+{%- assign current = product.selected_or_first_available_variant -%}
+<div class="page-width">
+  <div class="product">
+    <div class="product__gallery">
+      <div class="product__main">
+        {%- if product.featured_image -%}
+          {{ product.featured_image | image_url: width: 1400 | image_tag: loading: 'eager', widths: '600, 900, 1400', sizes: '(min-width: 900px) 55vw, 100vw', alt: product.featured_image.alt | default: product.title, data-main-image: '' }}
+        {%- else -%}{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}
+      </div>
+      {%- if product.images.size > 1 -%}
+        <div class="product__thumbs">
+          {%- for image in product.images -%}
+            <button type="button" data-thumb data-src="{{ image | image_url: width: 1400 }}" class="{% if forloop.first %}is-active{% endif %}" aria-label="Image {{ forloop.index }}">
+              {{ image | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+    <div class="product__info" {{ section.shopify_attributes }}>
+      {%- if product.vendor != blank -%}<span class="eyebrow">{{ product.vendor }}</span>{%- endif -%}
+      <h1>{{ product.title }}</h1>
+      <div class="product__price">
+        {{ current.price | money }}
+        {%- if current.compare_at_price > current.price -%}<s>{{ current.compare_at_price | money }}</s>{%- endif -%}
+      </div>
+      {%- form 'product', product -%}
+        {%- unless product.has_only_default_variant -%}
+          {%- for option in product.options_with_values -%}
+            <div class="field">
+              <label for="Option-{{ forloop.index0 }}">{{ option.name }}</label>
+              <select id="Option-{{ forloop.index0 }}" onchange="(function(){var v=[];document.querySelectorAll('[data-option]').forEach(function(s){v.push(s.value)});var m={{ product.variants | json | escape }};var f=m.find(function(x){return x.options.join('|')===v.join('|')});if(f){window.location.search='variant='+f.id}})()" data-option>
+                {%- for value in option.values -%}<option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>{%- endfor -%}
+              </select>
+            </div>
+          {%- endfor -%}
+        {%- endunless -%}
+        <input type="hidden" name="id" value="{{ current.id }}">
+        <div class="field">
+          <label for="Qty">{{ 'product.quantity' | t }}</label>
+          <input id="Qty" type="number" name="quantity" value="1" min="1">
+        </div>
+        <button class="button button--full" type="submit" {% unless current.available %}disabled{% endunless %}>
+          {%- if current.available -%}{{ 'product.add_to_cart' | t }}{%- else -%}{{ 'product.sold_out' | t }}{%- endif -%}
+        </button>
+      {%- endform -%}
+      <div class="product__desc">{{ product.description }}</div>
+      <ul class="perks">
+        <li>Non-toxic, pet-safe finishes</li>
+        <li>Removable, washable cushion</li>
+        <li>30-day happy-cat returns</li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% schema %}{ "name": "Product" }{% endschema %}
