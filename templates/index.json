@@ -29,8 +29,7 @@
         "r3": { "type": "review", "settings": { "rating": 5 } }
       },
       "block_order": ["r1", "r2", "r3"]
-    },
-    "newsletter": { "type": "newsletter" }
+    }
   },
-  "order": ["hero", "featured", "story", "features", "reviews", "newsletter"]
+  "order": ["hero", "featured", "story", "features", "reviews"]
 }
