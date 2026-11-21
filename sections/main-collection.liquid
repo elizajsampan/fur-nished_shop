@@ -1,8 +1,9 @@
 <div class="page-width">
-  <div class="page-title">
-    <span class="eyebrow">Collection</span>
-    <h1>{{ collection.title }}</h1>
-    {%- if collection.description != blank -%}<p>{{ collection.description }}</p>{%- endif -%}
+  <div class="page-title page-title--compact">
+    {%- assign desc_has_heading = false -%}
+    {%- if collection.description contains '<h2' or collection.description contains '<h1' -%}{%- assign desc_has_heading = true -%}{%- endif -%}
+    <h1 {% if desc_has_heading %}class="visually-hidden"{% endif %}>{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}<div class="collection-desc">{{ collection.description }}</div>{%- endif -%}
   </div>
   {%- if section.settings.show_filters -%}
     <nav class="collection-filters" aria-label="Filter by collection">
@@ -48,7 +49,7 @@
   "name": "Collection",
   "settings": [
     { "type": "checkbox", "id": "show_filters", "label": "Show collection filter buttons", "default": true },
-    { "type": "range", "id": "columns", "label": "Columns", "min": 2, "max": 4, "step": 1, "default": 3 },
+    { "type": "range", "id": "columns", "label": "Columns", "min": 2, "max": 4, "step": 1, "default": 4 },
     { "type": "range", "id": "per_page", "label": "Products per page", "min": 6, "max": 24, "step": 3, "default": 12 }
   ]
 }
