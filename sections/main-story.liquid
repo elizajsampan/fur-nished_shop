@@ -1,0 +1,79 @@
+<div class="story-page" {{ section.shopify_attributes }}>
+
+  <section class="story-hero">
+    {%- if section.settings.banner_image != blank -%}
+      {{ section.settings.banner_image | image_url: width: 2400 | image_tag: class: 'story-hero__img', widths: '800, 1200, 1800, 2400', sizes: '100vw', loading: 'eager', alt: '' }}
+    {%- else -%}
+      <img class="story-hero__img" src="{{ 'slide-3.jpg' | asset_url }}" alt="" width="1000" height="638" loading="eager">
+    {%- endif -%}
+    <div class="page-width story-hero__inner">
+      <span class="eyebrow">{{ page.title }}</span>
+      <h1>{{ section.settings.headline }}</h1>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="page-width split">
+      <div class="split__media story__media">
+        {%- if section.settings.side_image != blank -%}
+          {{ section.settings.side_image | image_url: width: 1200 | image_tag: class: 'split__img', loading: 'lazy', widths: '600, 900, 1200', alt: '' }}
+        {%- else -%}
+          <img class="split__img" src="{{ 'story.jpg' | asset_url }}" alt="" width="736" height="977" loading="lazy">
+        {%- endif -%}
+      </div>
+      <div class="story-body">{{ page.content }}</div>
+    </div>
+  </section>
+
+  {%- if section.blocks.size > 0 -%}
+  <section class="section surface">
+    <div class="page-width">
+      <div class="section-head section-head--center"><h2>{{ section.settings.values_heading }}</h2></div>
+      <div class="story-values">
+        {%- for block in section.blocks -%}
+          <div class="story-value" {{ block.shopify_attributes }}>
+            <span class="story-value__num">0{{ forloop.index }}</span>
+            <h3>{{ block.settings.title }}</h3>
+            <p>{{ block.settings.text }}</p>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+  {%- endif -%}
+
+  <section class="section story-cta">
+    <div class="page-width">
+      {%- if section.settings.quote != blank -%}<p class="story-cta__quote">{{ section.settings.quote }}</p>{%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <a class="button" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">{{ section.settings.button_label }}</a>
+      {%- endif -%}
+    </div>
+  </section>
+</div>
+{% schema %}
+{
+  "name": "Our story",
+  "settings": [
+    { "type": "image_picker", "id": "banner_image", "label": "Banner image (defaults to theme image)" },
+    { "type": "text", "id": "headline", "label": "Banner headline", "default": "Good design should have nine lives." },
+    { "type": "image_picker", "id": "side_image", "label": "Side image (defaults to theme image)" },
+    { "type": "text", "id": "values_heading", "label": "Values heading", "default": "What we stand for" },
+    { "type": "text", "id": "quote", "label": "Closing line", "default": "Because a house isn't truly a home until it's Fur-nished." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop the collection" },
+    { "type": "url", "id": "button_link", "label": "Button link" }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Furniture first" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Pieces that look at home in a living room." }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [{ "name": "Our story" }]
+}
+{% endschema %}
