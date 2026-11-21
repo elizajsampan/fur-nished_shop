@@ -4,20 +4,16 @@ name: Deploy branch to unpublished theme
 # then pick the branch in the "Use workflow from" dropdown.
 on:
   workflow_dispatch:
-    inputs:
-      theme_name:
-        description: Unpublished theme to deploy to (created if it doesn't exist)
-        required: true
-        default: Staging
 
 concurrency:
-  group: deploy-unpublished-${{ inputs.theme_name }}
+  group: deploy-unpublished-staging
   cancel-in-progress: true
 
 env:
   SHOPIFY_STORE: fur-nished-store.myshopify.com
   SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
-  THEME_NAME: ${{ inputs.theme_name }}
+  # One shared unpublished theme for every branch. Created on the first run if missing.
+  THEME_NAME: Staging
 
 jobs:
   deploy:
