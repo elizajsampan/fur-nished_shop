@@ -3,9 +3,9 @@
     "main": {
       "type": "main-story",
       "blocks": {
-        "v1": { "type": "value", "settings": { "title": "Furniture first", "text": "Solid oak and walnut pieces that look at home in a living room, never like pet gear." } },
-        "v2": { "type": "value", "settings": { "title": "Made for cats", "text": "Every nook, perch and bed is sized for how cats actually curl, climb and nap." } },
-        "v3": { "type": "value", "settings": { "title": "Built to last", "text": "Hand-finished with pet-safe oils, with washable covers that keep nests fresh." } }
+        "v1": { "type": "value", "settings": { "title": "Furniture first", "text": "Solid wood pieces that look at home in a living room." } },
+        "v2": { "type": "value", "settings": { "title": "Made for cats", "text": "Sized for how cats curl, climb and nap." } },
+        "v3": { "type": "value", "settings": { "title": "Built to last", "text": "Pet-safe oils and washable covers." } }
       },
       "block_order": ["v1", "v2", "v3"],
       "settings": {}

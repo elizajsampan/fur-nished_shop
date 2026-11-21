@@ -4,7 +4,7 @@
     {%- if section.settings.banner_image != blank -%}
       {{ section.settings.banner_image | image_url: width: 2400 | image_tag: class: 'story-hero__img', widths: '800, 1200, 1800, 2400', sizes: '100vw', loading: 'eager', alt: '' }}
     {%- else -%}
-      <img class="story-hero__img" src="{{ 'slide-3.jpg' | asset_url }}" alt="" width="1000" height="638" loading="eager">
+      <img class="story-hero__img" src="{{ 'slide-1.jpg' | asset_url }}" alt="" width="1200" height="1200" loading="eager">
     {%- endif -%}
     <div class="page-width story-hero__inner">
       <span class="eyebrow">{{ page.title }}</span>
@@ -12,16 +12,35 @@
     </div>
   </section>
 
-  <section class="section">
-    <div class="page-width split">
-      <div class="split__media story__media">
-        {%- if section.settings.side_image != blank -%}
-          {{ section.settings.side_image | image_url: width: 1200 | image_tag: class: 'split__img', loading: 'lazy', widths: '600, 900, 1200', alt: '' }}
+  <section class="section story-intro">
+    <div class="page-width">
+      <p class="story-intro__text">{{ section.settings.statement }}</p>
+      {%- if section.settings.show_page_content -%}<div class="story-body">{{ page.content }}</div>{%- endif -%}
+    </div>
+  </section>
+
+  <section class="story-mosaic-wrap">
+    <div class="page-width story-mosaic">
+      <figure class="story-mosaic__tall">
+        {%- if section.settings.image_1 != blank -%}
+          {{ section.settings.image_1 | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500, 800, 1000', alt: '' }}
         {%- else -%}
-          <img class="split__img" src="{{ 'story.jpg' | asset_url }}" alt="" width="736" height="977" loading="lazy">
+          <img src="{{ 'story.jpg' | asset_url }}" alt="" width="736" height="977" loading="lazy">
         {%- endif -%}
+        <figcaption>{{ section.settings.caption_1 }}</figcaption>
+      </figure>
+      <figure class="story-mosaic__wide">
+        {%- if section.settings.image_2 != blank -%}
+          {{ section.settings.image_2 | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '600, 900, 1400', alt: '' }}
+        {%- else -%}
+          <img src="{{ 'slide-3.jpg' | asset_url }}" alt="" width="1000" height="638" loading="lazy">
+        {%- endif -%}
+        <figcaption>{{ section.settings.caption_2 }}</figcaption>
+      </figure>
+      <div class="story-mosaic__note">
+        <span class="eyebrow">{{ section.settings.note_eyebrow }}</span>
+        <p>{{ section.settings.note_text }}</p>
       </div>
-      <div class="story-body">{{ page.content }}</div>
     </div>
   </section>
 
@@ -57,7 +76,14 @@
   "settings": [
     { "type": "image_picker", "id": "banner_image", "label": "Banner image (defaults to theme image)" },
     { "type": "text", "id": "headline", "label": "Banner headline", "default": "Good design should have nine lives." },
-    { "type": "image_picker", "id": "side_image", "label": "Side image (defaults to theme image)" },
+    { "type": "textarea", "id": "statement", "label": "Opening statement", "default": "We started Fur-nished with one question: what if pet furniture looked like actual furniture?" },
+    { "type": "checkbox", "id": "show_page_content", "label": "Also show the page's own text (from the Pages editor)", "default": false },
+    { "type": "image_picker", "id": "image_1", "label": "Tall image (defaults to theme image)" },
+    { "type": "text", "id": "caption_1", "label": "Tall image caption", "default": "Walnut cat pod" },
+    { "type": "image_picker", "id": "image_2", "label": "Wide image (defaults to theme image)" },
+    { "type": "text", "id": "caption_2", "label": "Wide image caption", "default": "Oak scratcher lounger" },
+    { "type": "text", "id": "note_eyebrow", "label": "Note label", "default": "Made for modern homes" },
+    { "type": "textarea", "id": "note_text", "label": "Note text", "default": "Designed for discerning felines, and built to blend into your living room." },
     { "type": "text", "id": "values_heading", "label": "Values heading", "default": "What we stand for" },
     { "type": "text", "id": "quote", "label": "Closing line", "default": "Because a house isn't truly a home until it's Fur-nished." },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop the collection" },
