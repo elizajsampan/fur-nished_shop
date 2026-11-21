@@ -18,6 +18,18 @@
         <h4>Care</h4>
         <ul>{%- for link in linklists[section.settings.menu_info].links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}</ul>
       </div>
+      {%- if section.settings.show_newsletter -%}
+      <div class="footer__news">
+        <h4>{{ section.settings.newsletter_heading }}</h4>
+        <p>{{ section.settings.newsletter_text }}</p>
+        {%- form 'customer', id: 'FooterNewsletter' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <input type="email" name="contact[email]" placeholder="{{ 'newsletter.email' | t }}" aria-label="{{ 'newsletter.email' | t }}" required>
+          <button class="button" type="submit">{{ 'newsletter.subscribe' | t }}</button>
+          {%- if form.posted_successfully? -%}<p class="form-msg">{{ 'newsletter.success' | t }}</p>{%- endif -%}
+        {%- endform -%}
+      </div>
+      {%- endif -%}
     </div>
     <div class="footer__bottom">
       <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
@@ -30,6 +42,9 @@
   "name": "Footer",
   "settings": [
     { "type": "text", "id": "tagline", "label": "Tagline", "default": "Elevated living for cats and their humans." },
+    { "type": "checkbox", "id": "show_newsletter", "label": "Show newsletter signup", "default": true },
+    { "type": "text", "id": "newsletter_heading", "label": "Newsletter heading", "default": "Join the household" },
+    { "type": "textarea", "id": "newsletter_text", "label": "Newsletter text", "default": "New pieces, styling ideas and 10% off your first order." },
     { "type": "link_list", "id": "menu_shop", "label": "Shop menu", "default": "main-menu" },
     { "type": "link_list", "id": "menu_info", "label": "Info menu", "default": "footer" }
   ]
