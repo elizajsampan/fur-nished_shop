@@ -4,6 +4,16 @@
     <h1>{{ collection.title }}</h1>
     {%- if collection.description != blank -%}<p>{{ collection.description }}</p>{%- endif -%}
   </div>
+  {%- if section.settings.show_filters -%}
+    <nav class="collection-filters" aria-label="Filter by collection">
+      <a href="{{ routes.all_products_collection_url }}" {% if collection.handle == 'all' %}aria-current="page"{% endif %}>All</a>
+      {%- for c in collections -%}
+        {%- unless c.handle == 'all' or c.handle == 'frontpage' or c.products_count == 0 -%}
+          <a href="{{ c.url }}" {% if collection.handle == c.handle %}aria-current="page"{% endif %}>{{ c.title }}</a>
+        {%- endunless -%}
+      {%- endfor -%}
+    </nav>
+  {%- endif -%}
   {%- paginate collection.products by section.settings.per_page -%}
     <div class="toolbar">
       <span>{{ collection.products_count }} {{ collection.products_count | pluralize: 'piece', 'pieces' }}</span>
@@ -37,6 +47,7 @@
 {
   "name": "Collection",
   "settings": [
+    { "type": "checkbox", "id": "show_filters", "label": "Show collection filter buttons", "default": true },
     { "type": "range", "id": "columns", "label": "Columns", "min": 2, "max": 4, "step": 1, "default": 3 },
     { "type": "range", "id": "per_page", "label": "Products per page", "min": 6, "max": 24, "step": 3, "default": 12 }
   ]

@@ -322,3 +322,13 @@ p{margin:0 0 1em}
   .story-mosaic__wide{min-height:0;aspect-ratio:3/2}
   .story-mosaic__note{padding:26px}
 }
+
+/* Collection filter pills */
+.collection-filters{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:0 0 32px}
+.collection-filters a{text-decoration:none;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;padding:10px 20px;border:1px solid rgba(44,44,44,.25);border-radius:999px;background:#fff;transition:background .2s,color .2s,border-color .2s}
+.collection-filters a:hover{border-color:var(--color-accent);color:var(--color-accent)}
+.collection-filters a[aria-current=page]{background:var(--color-accent);border-color:var(--color-accent);color:#fff}
+@media (max-width:700px){
+  .collection-filters{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;margin-left:-20px;margin-right:-20px;padding:0 20px 6px;-webkit-overflow-scrolling:touch}
+  .collection-filters a{white-space:nowrap;flex:none}
+}
