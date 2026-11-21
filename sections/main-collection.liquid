@@ -1,7 +1,9 @@
 <div class="page-width">
   <div class="page-title page-title--compact">
-    <h1>{{ collection.title }}</h1>
-    {%- if collection.description != blank -%}<p>{{ collection.description }}</p>{%- endif -%}
+    {%- assign desc_has_heading = false -%}
+    {%- if collection.description contains '<h2' or collection.description contains '<h1' -%}{%- assign desc_has_heading = true -%}{%- endif -%}
+    <h1 {% if desc_has_heading %}class="visually-hidden"{% endif %}>{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}<div class="collection-desc">{{ collection.description }}</div>{%- endif -%}
   </div>
   {%- if section.settings.show_filters -%}
     <nav class="collection-filters" aria-label="Filter by collection">
