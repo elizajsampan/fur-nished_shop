@@ -1,19 +1,55 @@
 <div class="page-width">
-  <div class="page-title"><h1>{{ 'general.search' | t }}</h1>
-    <form action="{{ routes.search_url }}" method="get" role="search" class="newsletter" style="margin-top:1rem">
-      <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search">
+  <div class="page-title page-title--compact">
+    <h1>{{ 'general.search' | t }}</h1>
+    <form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
+      <input type="hidden" name="type" value="product">
+      <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search for beds, tables, scratchers..." aria-label="Search">
       <button class="button" type="submit">Go</button>
     </form>
   </div>
+
   {%- paginate search.results by 12 -%}
-    {%- if search.performed and search.results_count == 0 -%}<p class="empty">No results for &ldquo;{{ search.terms }}&rdquo;.</p>{%- endif -%}
-    <div class="grid" style="--cols:3">
-      {%- for item in search.results -%}
-        {%- if item.object_type == 'product' -%}{% render 'product-card', product: item %}
-        {%- else -%}<a class="card" href="{{ item.url }}"><h3 class="card__title">{{ item.title }}</h3></a>{%- endif -%}
-      {%- endfor -%}
-    </div>
+    {%- if search.performed -%}
+      <p class="search-summary">
+        {%- if search.results_count > 0 -%}
+          {{ search.results_count }} result{% if search.results_count != 1 %}s{% endif %} for &ldquo;{{ search.terms }}&rdquo;
+        {%- else -%}
+          No results for &ldquo;{{ search.terms }}&rdquo;. Try another word, or browse our pieces below.
+        {%- endif -%}
+      </p>
+    {%- endif -%}
+
+    {%- if search.performed and search.results_count > 0 -%}
+      <div class="grid" style="--cols:4">
+        {%- for item in search.results -%}
+          {%- if item.object_type == 'product' -%}{% render 'product-card', product: item %}
+          {%- else -%}<a class="card" href="{{ item.url }}"><h3 class="card__title">{{ item.title }}</h3></a>{%- endif -%}
+        {%- endfor -%}
+      </div>
+      {%- if paginate.pages > 1 -%}
+        <nav class="pagination" aria-label="Pagination">{{ paginate | default_pagination }}</nav>
+      {%- endif -%}
+    {%- else -%}
+      <div class="section-head section-head--center search-browse-head">
+        <div><span class="eyebrow">{{ section.settings.eyebrow }}</span><h2>{{ section.settings.heading }}</h2></div>
+      </div>
+      <div class="grid" style="--cols:4">
+        {%- for product in collections.all.products limit: section.settings.count -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      </div>
+      <div class="search-browse-cta"><a class="button button--ghost" href="{{ routes.all_products_collection_url }}">View all products</a></div>
+    {%- endif -%}
   {%- endpaginate -%}
 </div>
 <div style="height:88px"></div>
-{% schema %}{ "name": "Search" }{% endschema %}
+{% schema %}
+{
+  "name": "Search",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Browse" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Our best loved pieces" },
+    { "type": "range", "id": "count", "label": "Products to show", "min": 4, "max": 12, "step": 4, "default": 8 }
+  ]
+}
+{% endschema %}
