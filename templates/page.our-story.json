@@ -1,0 +1,54 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-our-story",
+      "blocks": {
+        "beds": {
+          "type": "collection_row",
+          "settings": {
+            "fallback": "beds",
+            "eyebrow": "Cat beds",
+            "heading": "Naps, beautifully upgraded.",
+            "text": "Your cat sleeps up to 16 hours a day. Our beds trade loud patterns and lumpy plush for clean silhouettes, sustainably sourced wood and cloud-soft cushions.",
+            "point1": "Tucked-away caves and elevated perches",
+            "point2": "Sustainably sourced woods",
+            "point3": "Machine-washable cushions",
+            "button_label": "Shop cat beds",
+            "button_link": "shopify://collections/cat-beds"
+          }
+        },
+        "furniture": {
+          "type": "collection_row",
+          "settings": {
+            "fallback": "furniture",
+            "eyebrow": "Cat-friendly furniture",
+            "heading": "Furniture with a secret.",
+            "text": "Solid-wood coffee tables with plush center nooks and bedside tables that double as cozy caves. Every piece works double duty without compromising your style.",
+            "point1": "Hidden feline hideaways built right in",
+            "point2": "Durable, scratch-resistant finishes",
+            "point3": "Removable cushions",
+            "button_label": "Shop cat furniture",
+            "button_link": "shopify://collections/cat-furniture"
+          }
+        },
+        "scratchers": {
+          "type": "collection_row",
+          "settings": {
+            "fallback": "scratchers",
+            "eyebrow": "Sculptural scratchers",
+            "heading": "Save the sofa, keep the style.",
+            "text": "An everyday feline instinct, turned into modern art. Natural woven sisal and solid oak, weighted to stay put during the wildest morning zoomies.",
+            "point1": "Natural woven sisal and solid oak",
+            "point2": "Replaceable corrugated curves",
+            "point3": "Weighted so it stays put",
+            "button_label": "Shop scratchers",
+            "button_link": "shopify://collections/cat-scratchers"
+          }
+        }
+      },
+      "block_order": ["beds", "furniture", "scratchers"],
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}
