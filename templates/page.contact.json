@@ -3,12 +3,37 @@
     "main": {
       "type": "main-contact",
       "blocks": {
-        "n1": { "type": "note", "settings": { "title": "Shipping", "text": "Free shipping on orders over ₱10,000." } },
-        "n2": { "type": "note", "settings": { "title": "Returns & exchanges", "text": "Changed your mind? Message us with your order number and we'll sort it out." } }
+        "n1": {
+          "type": "note",
+          "settings": {
+            "title": "Shipping",
+            "text": "Free shipping on orders over ₱10,000."
+          }
+        },
+        "n2": {
+          "type": "note",
+          "settings": {
+            "title": "Returns & exchanges",
+            "text": "Changed your mind? Message us with your order number and we'll sort it out."
+          }
+        },
+        "n3": {
+          "type": "note",
+          "settings": {
+            "title": "Product care",
+            "text": "Cushion covers are removable and machine-washable, and wood surfaces wipe clean with a damp cloth. Questions about care? Just ask."
+          }
+        }
       },
-      "block_order": ["n1", "n2"],
+      "block_order": [
+        "n1",
+        "n2",
+        "n3"
+      ],
       "settings": {}
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
