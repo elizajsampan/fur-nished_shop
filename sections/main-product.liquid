@@ -1,5 +1,16 @@
 {%- assign current = product.selected_or_first_available_variant -%}
 <div class="page-width">
+  {%- liquid
+    assign back_url = routes.all_products_collection_url
+    assign back_label = 'Back to shop'
+    if collection != blank
+      assign back_url = collection.url
+      assign back_label = 'Back to ' | append: collection.title
+    endif
+  -%}
+  <a class="back-link" href="{{ back_url }}" data-back>
+    <span aria-hidden="true">&larr;</span> {{ back_label }}
+  </a>
   <div class="product">
     <div class="product__gallery">
       <div class="product__main">
