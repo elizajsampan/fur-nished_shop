@@ -18,4 +18,14 @@ document.addEventListener('DOMContentLoaded', function () {
       thumb.classList.add('is-active');
     });
   });
+
+  document.querySelectorAll('[data-back]').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var ref = document.referrer;
+      if (ref && ref.indexOf(location.origin) === 0 && history.length > 1) {
+        e.preventDefault();
+        history.back();
+      }
+    });
+  });
 });
