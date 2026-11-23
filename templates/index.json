@@ -24,9 +24,9 @@
     "reviews": {
       "type": "testimonials",
       "blocks": {
-        "r1": { "type": "review", "settings": { "rating": 5 } },
-        "r2": { "type": "review", "settings": { "rating": 5 } },
-        "r3": { "type": "review", "settings": { "rating": 5 } }
+        "r1": { "type": "review", "settings": { "rating": 5, "quote": "The coffee table looks like it came from a design studio, and my cat claimed the nook the same afternoon. I did not expect furniture to make us both this happy.", "name": "Sample customer", "detail": "Placeholder review" } },
+        "r2": { "type": "review", "settings": { "rating": 5, "quote": "Finally a cat bed I do not have to hide. The cushion comes off and goes straight into the wash, and it still looks great in the living room.", "name": "Sample customer", "detail": "Placeholder review" } },
+        "r3": { "type": "review", "settings": { "rating": 5, "quote": "The scratcher is gorgeous and heavy enough to stay put. The sofa has been left alone ever since.", "name": "Sample customer", "detail": "Placeholder review" } }
       },
       "block_order": ["r1", "r2", "r3"]
     }
